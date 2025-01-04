@@ -21,10 +21,10 @@ function App() {
       }
       // Construir URL con query params
       const queryParams = new URLSearchParams({
-        from_city: selection.from?.name || '', // Assuming City has a 'name' property
-        to_city: selection.to?.name || ''      // Assuming City has a 'name' property
+        from_city: selection.from?.name || '',
+        to_city: selection.to?.name || ''
       });
-      const url = `http://localhost:5000/get-carriers?${queryParams}`;
+      const url = `${import.meta.env.VITE_API_URL}/get-carriers?${queryParams}`;
 
       const response = await fetch(url);
       if (!response.ok) throw new Error('Failed to fetch carriers data');
