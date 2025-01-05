@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormControl, InputLabel, MenuItem, Select, Button } from '@mui/material';
 import { City, RouteSelection } from '../types';
-import { cities } from '../data/cities';
+import { getCities } from '../services/cityService';
 
 interface SearchSectionProps {
   selection: RouteSelection;
@@ -16,6 +16,21 @@ export const SearchSection: React.FC<SearchSectionProps> = ({
   onSearch,
   isLoading
 }) => {
+  const [cities, setCities] = useState<City[]>([]);
+
+  useEffect(() => {
+    const loadCities = async () => {
+      try {
+        const citiesData = await getCities();
+        setCities(citiesData);
+      } catch (error) {
+        console.error('Error loading cities:', error);
+      }
+    };
+
+    loadCities();
+  }, []);
+
   return (
     <div className="flex flex-col md:flex-row gap-4 p-4 bg-white rounded-lg shadow-md">
       <FormControl className="flex-1">

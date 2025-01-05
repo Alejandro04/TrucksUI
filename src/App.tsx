@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { SearchSection } from './components/SearchSection';
 import { MapComponent } from './components/MapComponent';
 import { CarriersTable } from './components/CarriersTable';
@@ -15,16 +15,14 @@ function App() {
     setError(null);
 
     try {
-      // Verificar que ambas ciudades estén seleccionadas
       if (!selection.from || !selection.to) {
         throw new Error('Please select both cities');
       }
-      // Construir URL con query params
       const queryParams = new URLSearchParams({
         from_city: selection.from?.name || '',
         to_city: selection.to?.name || ''
       });
-      const url = `${import.meta.env.VITE_API_URL}/get-carriers?${queryParams}`;
+      const url = `${import.meta.env.VITE_API_URL}/carriers?${queryParams}`;
 
       const response = await fetch(url);
       if (!response.ok) throw new Error('Failed to fetch carriers data');
